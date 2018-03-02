@@ -1,11 +1,12 @@
 let restaurants,
   neighborhoods,
-  cuisines
-var map
-var markers = []
+  cuisines;
+var map;
+var markers = [];
 
 /**
- * Fetch neighborhoods and cuisines as soon as the page is loaded.
+ * @description Fetch neighborhoods and cuisines as soon as the page is loaded.
+ * @param event
  */
 document.addEventListener('DOMContentLoaded', (event) => {
   fetchNeighborhoods();
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 /**
- * Fetch all neighborhoods and set their HTML.
+ * @description Fetch all neighborhoods and set their HTML.
  */
 fetchNeighborhoods = () => {
   DBHelper.fetchNeighborhoods((error, neighborhoods) => {
@@ -27,7 +28,8 @@ fetchNeighborhoods = () => {
 }
 
 /**
- * Set neighborhoods HTML.
+ * @description Set neighborhoods HTML.
+ * @param {array} neighborhoods
  */
 fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
   const select = document.getElementById('neighborhoods-select');
@@ -40,7 +42,7 @@ fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
 }
 
 /**
- * Fetch all cuisines and set their HTML.
+ * @description Fetch all cuisines and set their HTML.
  */
 fetchCuisines = () => {
   DBHelper.fetchCuisines((error, cuisines) => {
@@ -54,7 +56,8 @@ fetchCuisines = () => {
 }
 
 /**
- * Set cuisines HTML.
+ * @description Set cuisines HTML.
+ * @param {array} cuisines
  */
 fillCuisinesHTML = (cuisines = self.cuisines) => {
   const select = document.getElementById('cuisines-select');
@@ -68,7 +71,7 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
 }
 
 /**
- * Initialize Google map, called from HTML.
+ * @description Initialize Google map, called from HTML.
  */
 window.initMap = () => {
   let loc = {
@@ -84,7 +87,7 @@ window.initMap = () => {
 }
 
 /**
- * Update page and map for current restaurants.
+ * @description Update page and map for current restaurants.
  */
 updateRestaurants = () => {
   const cSelect = document.getElementById('cuisines-select');
@@ -107,7 +110,8 @@ updateRestaurants = () => {
 }
 
 /**
- * Clear current restaurants, their HTML and remove their map markers.
+ * @description Clear current restaurants, their HTML and remove their map markers.
+ * @param {array} restaurants
  */
 resetRestaurants = (restaurants) => {
   // Remove all restaurants
@@ -122,7 +126,8 @@ resetRestaurants = (restaurants) => {
 }
 
 /**
- * Create all restaurants HTML and add them to the webpage.
+ * @description Create all restaurants HTML and add them to the webpage.
+ * @param {array} restaurants
  */
 fillRestaurantsHTML = (restaurants = self.restaurants) => {
   const ul = document.getElementById('restaurants-list');
@@ -133,15 +138,48 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 }
 
 /**
- * Create restaurant HTML.
+ * @description Create restaurant HTML.
+ * @param {object} restaurant
  */
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
 
-  const image = document.createElement('img');
-  image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  li.append(image);
+    if (restaurant.photograph) {
+    const imageRepresentations = DBHelper.imageUrlForRestaurant(restaurant);
+    const picture = document.createElement('picture');
+    picture.className = 'restaurant-img';
+    picture.setAttribute('aria-labelledby', "fig_" + restaurant.id);
+    picture.setAttribute('role', 'img');
+
+    const sourceSmall = document.createElement('source');
+    sourceSmall.setAttribute('media', '(max-width:700px)');
+    sourceSmall.setAttribute('srcset',
+      imageRepresentations.small_1x
+      .concat(' 1x')
+    );
+    picture.append(sourceSmall);
+
+    const sourceLarge = document.createElement('source');
+    sourceLarge.setAttribute('media', '(min-width:701px)');
+    sourceLarge.setAttribute('srcset',
+      imageRepresentations.large_1x
+      .concat(' 1x')
+    );
+    picture.append(sourceLarge);
+
+    const image = document.createElement('img');
+    image.src = imageRepresentations.small_1x;
+    image.setAttribute('alt', 'restaurant '.concat(restaurant.name, ', ', restaurant.photo_alt));
+    image.className = 'restaurant-img';
+    picture.append(image);
+
+    const figcaption = document.createElement('figcaption');
+    figcaption.setAttribute('id', "fig_" + restaurant.id)
+    figcaption.innerHTML = restaurant.photo_caption;
+    picture.append(figcaption);
+
+    li.append(picture);
+  }
 
   const name = document.createElement('h1');
   name.innerHTML = restaurant.name;
@@ -157,22 +195,39 @@ createRestaurantHTML = (restaurant) => {
 
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
+  more.setAttribute('role', 'button');
+  more.setAttribute('aria-label', 'View more about ' + restaurant.name);
   more.href = DBHelper.urlForRestaurant(restaurant);
-  li.append(more)
+  li.append(more);
 
-  return li
+  return li;
 }
 
 /**
- * Add markers for current restaurants to the map.
+ * @description Add markers for current restaurants to the map.
+ * @param {restaurants} array
  */
 addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     // Add marker to the map
     const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map);
     google.maps.event.addListener(marker, 'click', () => {
-      window.location.href = marker.url
+      window.location.href = marker.url;
     });
     self.markers.push(marker);
   });
+}
+
+/**
+* @description Service Worker registration
+*/
+if ('serviceWorker' in navigator){
+    navigator.serviceWorker
+    .register('sw.js')
+    .then(function(registration){
+        console.log('ServiceWorker Registered', registration);
+    })
+    .catch(function(err){
+        console.log('ServiceWorker failed to Register', err);
+    })
 }
