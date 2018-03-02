@@ -202,7 +202,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 	margin: 0;
 	max-width: 100%;
 	min-height: 248px;
-	min-width: 100%;
+	min-width: 94%;
 }
 
 #restaurants-list li h1 {
@@ -266,7 +266,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   line-height: 1.1;
 }
 #restaurant-img {
-	width: 90%;
+	width: 85%;
 }
 #restaurant-address {
   font-size: 12pt;
@@ -278,10 +278,10 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   font: 300 12pt;
   letter-spacing: 10px;
   margin: 0 0 20px;
-  padding: 2px 0;
+  padding: 10px 0;
   text-align: center;
   text-transform: uppercase;
-	width: 90%;
+  width: 90%;
 }
 #restaurant-container, #reviews-container {
   border-bottom: 1px solid #d9d9d9;
@@ -314,10 +314,11 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   width: 85%;
 }
 #reviews-list li p {
-  margin: 0 0 10px;
+  font-size: 16px;
 }
 #restaurant-hours td {
   color: #666;
+  font-size: 15px;
 }
 
 /* ====================== Breakpoints ====================== */
@@ -365,7 +366,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 	#restaurant-container,
 	#reviews-container {
 		width: 100vw;
-		margin: 7em 0 0 0;
+		margin: 1em 1em 1px 20px;
 		padding: 0 0 0 0;
 	}
 	#restaurant-name {
@@ -373,6 +374,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 	}
 	#reviews-list {
 		padding: 1em;
+		margin: 1em 0 0 0;
 	}
 	p {
 		font-size: 15pt;
@@ -390,6 +392,9 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 		font-size: 13pt;
 	}
 	#restaurants-list li h1 {
-			font-size: 17pt;
+		font-size: 17pt;
+	}
+	#restaurant-hours td {
+		font-size: 17px;
 	}	
 }
