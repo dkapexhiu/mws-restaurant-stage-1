@@ -41,16 +41,27 @@
     <!-- End map -->
     <!-- Beginning restaurant -->
     <section id="restaurant-container" aria-label="restaurant-container" role="complementary">
+      <div>
       <h2 id="restaurant-name" aria-label="restaurant-name" tabindex="1"></h2>
       <picture id="restaurant-img" aria-label="restaurant-image" tabindex="2"></picture> 
       <p id="restaurant-cuisine" aria-label="restaurant-cuisine" tabindex="3"></p>
       <p id="restaurant-address" aria-label="restaurant-address" tabindex="4"></p>
-      <table id="restaurant-hours" aria-label="restaurant-hours" tabindex="5"></table>
+      <table id="restaurant-hours" aria-label="restaurant-hours" tabindex="5">
+        <thead>  
+          <tr>
+            <th>Day</th>
+            <th>Opening hours</th>
+          </tr>
+        </thead>
+      </table>
+      </div>
     </section>
     <!-- end restaurant -->
     <!-- Beginning reviews -->
     <section id="reviews-container" aria-label="reviews-container" role="complementary">
-      <ul id="reviews-list" aria-label="reviews-list" tabindex="6"></ul>
+      <div>
+        <ul id="reviews-list" aria-label="reviews-list" tabindex="6"></ul>
+      </div>
     </section>
     <!-- End reviews -->
   </main>
