@@ -54,9 +54,11 @@ fillRestaurantHTML = (restaurant = this.restaurant) => {
 
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
+  name.setAttribute("tabindex", "0");
 
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
+  address.setAttribute("tabindex", "0");
 
   if (restaurant.photograph) {
     const picture = document.getElementById('restaurant-img');
@@ -86,6 +88,7 @@ fillRestaurantHTML = (restaurant = this.restaurant) => {
     image.src = imageRepresentations.large_1x;
     image.setAttribute('alt', 'restaurant '.concat(restaurant.name, ', ', restaurant.photo_alt));
     image.className = 'restaurant-img';
+    image.setAttribute("tabindex", "0");
     picture.append(image);
 
     const figcaption = document.createElement('figcaption');
@@ -96,6 +99,7 @@ fillRestaurantHTML = (restaurant = this.restaurant) => {
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
+  cuisine.setAttribute("tabindex", "0");
 
   // fill operating hours
   if (restaurant.operating_hours) {
@@ -115,10 +119,12 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
     const row = document.createElement('tr');
 
     const day = document.createElement('td');
+    day.setAttribute("tabindex", "0");
     day.innerHTML = key;
     row.appendChild(day);
 
     const time = document.createElement('td');
+    time.setAttribute("tabindex", "0");
     time.innerHTML = operatingHours[key];
     row.appendChild(time);
 
@@ -157,18 +163,22 @@ createReviewHTML = (review) => {
   const li = document.createElement('li');
   const name = document.createElement('p');
   name.innerHTML = review.name;
+  name.setAttribute("tabindex", "0");
   li.appendChild(name);
 
   const date = document.createElement('p');
   date.innerHTML = review.date;
+  date.setAttribute("tabindex", "0");
   li.appendChild(date);
 
   const rating = document.createElement('p');
   rating.innerHTML = `Rating: ${review.rating}`;
+  rating.setAttribute("tabindex", "0");
   li.appendChild(rating);
 
   const comments = document.createElement('p');
   comments.innerHTML = review.comments;
+  comments.setAttribute("tabindex", "0");
   li.appendChild(comments);
 
   return li;
