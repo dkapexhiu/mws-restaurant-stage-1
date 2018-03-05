@@ -206,4 +206,18 @@ class DBHelper {
     return marker;
   }
 
+  /**
+  * @description Service Worker registration
+  */
+  if ('serviceWorker' in navigator){
+    navigator.serviceWorker
+    .register('sw.js')
+    .then(function(registration){
+        console.log('ServiceWorker Registered', registration);
+    })
+    .catch(function(err){
+        console.log('ServiceWorker failed to Register', err);
+    })
+  }
+  
 }
