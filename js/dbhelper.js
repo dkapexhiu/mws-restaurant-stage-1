@@ -205,6 +205,7 @@ class DBHelper {
     );
     return marker;
   }
+}
 
   /**
   * @description Service Worker registration
@@ -219,4 +220,3 @@ class DBHelper {
         console.log('ServiceWorker failed to Register', err);
     })
   }
-}
