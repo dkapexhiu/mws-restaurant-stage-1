@@ -208,7 +208,7 @@ class DBHelper {
 
   /**
   * @description Service Worker registration
-  
+  */
   if ('serviceWorker' in navigator){
     navigator.serviceWorker
     .register('sw.js')
@@ -219,5 +219,4 @@ class DBHelper {
         console.log('ServiceWorker failed to Register', err);
     })
   }
-  */
 }
