@@ -8,6 +8,7 @@ var cacheFiles = [
     '/restaurant.html',
     '/sw.js',
     '/css/styles.css',
+    '/css/restaurant.css',
     '/data/restaurants.json',
     '/img/1.jpg-380_1x.jpg',
     '/img/1.jpg-512_1x.jpg',
